@@ -1,0 +1,42 @@
+<div class="mb-3 mt-3 d-flex">
+  <h4 class="flex-grow-1">User Data List</h4><button (click)="addNewBtn()" data-toggle="modal" data-target="#addNewUser" type="button" class="mr-lg-3 btn btn-info">Add New</button></div>
+<fe-table [records]='allUserDataRes' (updateRecord)="updateUserData($event)" (deleteRecord)="deleteUserData($event)"></fe-table>
+
+<div class="modal" id="addNewUser">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Save User Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addNewUser" novalidate (ngSubmit)="addNewData(addNewUser.value, addNewUser.valid)">
+          <div class="form-group">
+            <label>Name *</label><small class="text-danger" [hidden]="addNewUser.controls.userName.valid || (addNewUser.controls.userName.pristine  && !submitted)">
+        Name is required
+    </small>
+            <input [ngClass]="{'border border-danger':  (addNewUser.controls.userName.invalid && addNewUser.controls.userName.dirty) || (addNewUser.controls.userName.invalid && submitted)}"
+              type="text" name="userName" formControlName="userName" class="form-control" [(ngModel)]="userName" placeholder="user name">
+          </div>
+          <div class="form-group">
+            <fe-slide [range]='setAge' [min]=0 [max]=100 [title]="'Age'" [step]=1 (ageRecived)="getAge($event)"></fe-slide>
+            <!--<label>Age *</label><small class="text-danger" [hidden]="addNewUser.controls.userAge.valid || (addNewUser.controls.userAge.pristine  && !submitted)">Age is required</small>
+              <input [ngClass]="{'border border-danger':  (addNewUser.controls.userAge.invalid && addNewUser.controls.userAge.dirty) || (addNewUser.controls.userAge.invalid && submitted)}"
+                type="number" formControlName="userAge" class="form-control" [(ngModel)]="userAge" placeholder="user age">-->
+          </div>
+          <div class="form-group">
+            <label>Occupation *</label><small class="text-danger" [hidden]="addNewUser.controls.userOccupation.valid || (addNewUser.controls.userOccupation.pristine  && !submitted)">Occupation is required</small>
+            <input [ngClass]="{'border border-danger':  (addNewUser.controls.userOccupation.invalid && addNewUser.controls.userOccupation.dirty) || (addNewUser.controls.userOccupation.invalid && submitted)}"
+              type="text" formControlName="userOccupation" class="form-control" [(ngModel)]="userOccupation" placeholder="user ocupation">
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-warning">Save</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
